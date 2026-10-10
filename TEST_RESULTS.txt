@@ -1,0 +1,23 @@
+Domain III tests (2026-10-09): 14 synthetic unittest cases PASS; exported QA assertions PASS (16).
+RESULT: PASS 16 structural/reconciliation/denominator/censoring validation assertions
+N=19,714; intervals=81,931; confirmed_breached=8,662; closed_without=10,943; withheld=109
+Conditional rate=44.1826%; hypothetical added flags=32, not certified breaches
+test_B_resolved_counts_until_closed (test_domain3_measurement.MeasurementTests.test_B_resolved_counts_until_closed) ... ok
+test_censored_not_automatically_compliant (test_domain3_measurement.MeasurementTests.test_censored_not_automatically_compliant) ... ok
+test_closed_interval_not_counted (test_domain3_measurement.MeasurementTests.test_closed_interval_not_counted) ... ok
+test_dq_mismatch_excluded (test_domain3_measurement.MeasurementTests.test_dq_mismatch_excluded) ... ok
+test_events_after_ended_included (test_domain3_measurement.MeasurementTests.test_events_after_ended_included) ... ok
+test_exact_threshold_is_not_breach (test_domain3_measurement.MeasurementTests.test_exact_threshold_is_not_breach) ... ok
+test_implicit_reopen_reviewer_gate (test_domain3_measurement.MeasurementTests.test_implicit_reopen_reviewer_gate) ... ok
+test_open_confirmed_breach (test_domain3_measurement.MeasurementTests.test_open_confirmed_breach) ... ok
+test_pending_pause_provisional (test_domain3_measurement.MeasurementTests.test_pending_pause_provisional) ... ok
+test_prior_breach_survives_special_state (test_domain3_measurement.MeasurementTests.test_prior_breach_survives_special_state) ... ok
+test_reopen_resumes_cumulative (test_domain3_measurement.MeasurementTests.test_reopen_resumes_cumulative) ... ok
+test_source_status_mismatch_excluded (test_domain3_measurement.MeasurementTests.test_source_status_mismatch_excluded) ... ok
+test_special_state_indeterminate_not_closed (test_domain3_measurement.MeasurementTests.test_special_state_indeterminate_not_closed) ... ok
+test_waiting_pause (test_domain3_measurement.MeasurementTests.test_waiting_pause) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.008s
+
+OK
