@@ -69,7 +69,7 @@ Further details: [Cleaning and Transformation Rules](docs/Cleaning_and_Transform
 | [`sql/`](sql/) | 19 numbered analysis/QA/view-definition SQL scripts |
 | [`powerbi/`](powerbi/) | Power BI Desktop report with two pages; refresh requires a suitable PostgreSQL environment |
 | [`docs/`](docs/) | Findings, business rules, terminology, original decision log, methodology and dashboard screenshots |
-| [`data/derived/`](data/derived/) | Previously published generated CSV/JSON snapshots; redistribution rights **must be reviewed** |
+| [`data/derived/`](data/derived/) | Generated CSV/JSON snapshots based on CC BY 4.0 source data; privacy review still recommended |
 | [`results/`](results/) | Saved test-results log |
 
 Two dashboard previews are included under [`docs/images/`](docs/images/). The `.pbix` contains an imported data model; its suitability for public distribution needs review before promoting this branch to `main`.
@@ -96,12 +96,22 @@ The analytical SQL files use staging tables `staging.ticket_outcomes` and `stagi
 
 **Current reproduction gap:** the PostgreSQL staging-table DDL and loading instructions have **not yet been versioned** in this repository. The SQL stage is therefore **not fully turn-key from a fresh database**. The bundled `python/prepare_postgres_csv.py` only reorders the ticket-outcome CSV columns for an existing staging-table layout. No passwords or local DB credentials should be committed.
 
+## Dataset source and attribution
+
+**Original dataset:** Abdellatif, Mohammad (2026). *Help Desk Tickets*. **Mendeley Data, Version 3**. DOI: [10.17632/btm76zndnt.3](https://doi.org/10.17632/btm76zndnt.3). [Dataset record](https://data.mendeley.com/datasets/btm76zndnt/3).
+
+**Source license:** [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). Credit for the underlying dataset belongs to its contributor, **Mohammad Abdellatif**. Its published files are described as curated and partly masked/anonymized by the contributor.
+
+**Changes in this portfolio:** This analysis is **not** the unmodified original dataset or the original author's study. I restricted the analytical population to external-project `Ticket`, `Service`, and `HD Service` records created in **2019–2022**; parsed timestamps to UTC; reconstructed observed status-event intervals; implemented and tested a **project-defined** cumulative 72-hour Rule B and Rule A comparator; excluded unclassifiable tickets from the conditional denominator; and created derived CSV/JSON results, SQL reporting views, and Power BI visualizations.
+
+**Attribution and responsibility:** This portfolio is an independent educational analysis and is **not endorsed by the source author, the data provider, or the source company**. The derived data are shared under the source's CC BY 4.0 attribution obligations where applicable; reuse should retain this attribution and the modification notice. License permission does not remove the need to avoid publishing sensitive personal or confidential information. The exact locally downloaded source-file version has not been independently verified by checksum; **Version 3 is the public release cited here**, not a claimed checksum match.
+
 ## Data, ethics and limits
 
 - The dataset describes archived 2019–2022 tickets, not current operational performance.
 - The conditional rate depends on working closure/pausing rules; it must **not** be presented as an approved company KPI.
 - The 109 excluded tickets consist of **40 censored, 62 semantic, and 7 data-quality indeterminate** cases.
 - Workflow delays are **investigation candidates**, not diagnosed root causes, employee labor hours, financial losses, or proven intervention opportunities.
-- The GitHub history already contains derived CSV exports and the imported Power BI data model. **Confirm data redistribution rights before making a final public release**. Moving or deleting files in a new commit does not erase prior Git history.
+- The GitHub history already contains derived CSV exports and the imported Power BI data model. The cited source release is CC BY 4.0, but **review derived records and the embedded Power BI data for privacy or third-party restrictions before a final public release**. Moving or deleting files in a new commit does not erase prior Git history.
 
 **Status:** Analyzed and documented portfolio case study; no company validation, deployment, or measured business intervention.
