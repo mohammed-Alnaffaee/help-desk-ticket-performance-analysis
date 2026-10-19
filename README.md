@@ -21,6 +21,20 @@ This is a **historical, descriptive and diagnostic** analysis—not a live servi
 
 **Definition:** 8,662 / 19,605 = 44.1826%. This is the proportion **among classifiable historical tickets**, not a contractual SLA measurement. The excluded tickets were **not** treated as successes.
 
+## Dashboard preview
+
+Static views of the historical Power BI report (2019–2022). The **44.18%** headline KPI is conditional under the project's Rule B, **not** a verified contractual SLA.
+
+### Executive Overview
+
+![Executive Overview — 72-Hour Ticket Performance](docs/images/dashboard_executive_overview.png)
+
+### Workflow & Operational Analysis
+
+![Operational Deep Dive — counted status duration and breached-ticket counts](docs/images/dashboard_workflow_operational_analysis.png)
+
+These are screenshots, not interactive dashboards. The Power BI project file is available in [`powerbi/`](powerbi/); using it requires Power BI Desktop and access to the local PostgreSQL reporting views.
+
 ## Selected findings
 
 - **Ticket type:** `HD Service` has the highest conditional rate (**58.64%**), while the more common `Ticket` type contributes the highest breach count (**6,607**).
@@ -54,11 +68,11 @@ Further details: [Cleaning and Transformation Rules](docs/Cleaning_and_Transform
 | [`python/`](python/) | Event reconstruction, audit helper, unit tests, export validation, PostgreSQL CSV preparation |
 | [`sql/`](sql/) | 19 numbered analysis/QA/view-definition SQL scripts |
 | [`powerbi/`](powerbi/) | Power BI Desktop report with two pages; refresh requires a suitable PostgreSQL environment |
-| [`docs/`](docs/) | Findings, business rules, terminology, original decision log and methodology |
+| [`docs/`](docs/) | Findings, business rules, terminology, original decision log, methodology and dashboard screenshots |
 | [`data/derived/`](data/derived/) | Previously published generated CSV/JSON snapshots; redistribution rights **must be reviewed** |
 | [`results/`](results/) | Saved test-results log |
 
-Dashboard screenshot images are **not yet included**. The `.pbix` contains an imported data model; its suitability for public distribution needs review before promoting this branch to `main`.
+Two dashboard previews are included under [`docs/images/`](docs/images/). The `.pbix` contains an imported data model; its suitability for public distribution needs review before promoting this branch to `main`.
 
 ## Run Python locally
 

@@ -24,7 +24,7 @@ Identify **which historical ticket types, years, anonymized project groups and w
 | Power BI Desktop | Two dashboard pages created |
 | PostgreSQL staging DDL/import commands in GitHub | Not yet published; reproducibility gap |
 | Source-company policy approval or operational deployment | Not obtained |
-| Dashboard PNG screenshots | Not yet published |
+| Dashboard PNG screenshots | Two historical report previews added under `docs/images/` |
 
 ## Measurement and interpretation decisions
 
@@ -39,7 +39,6 @@ Identify **which historical ticket types, years, anonymized project groups and w
 
 - Verify rights to redistribute already-published derived exports and the imported data model in the PBIX.
 - Add staging-table definitions and import procedure to enable independent SQL reproduction.
-- Add labeled dashboard screenshots without customer-identifying content.
 - Review the branch changes and merge only after approval.
 
 For detailed scope, exclusions, QA and exact results, see [Cleaning and Transformation Rules](Cleaning_and_Transformation_Rules.md) and [Findings and Recommendations](Findings_and_Recommendations.md).
