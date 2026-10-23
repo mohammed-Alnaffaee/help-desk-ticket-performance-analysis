@@ -1,0 +1,36 @@
+# Local Python environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# Source archives and local database artifacts
+*.zip
+*.backup
+*.dump
+*.sqlite
+*.db
+archives/
+data/raw/
+
+# Regenerable local output (tracked legacy snapshots remain tracked)
+local_output/
+domain3/local_output/
+output/
+*.log
+
+# Editor and operating-system artifacts
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
