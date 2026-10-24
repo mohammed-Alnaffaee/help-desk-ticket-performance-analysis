@@ -1,0 +1,31 @@
+name: Public artifact privacy screen
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/privacy_audit.py"
+      - ".github/workflows/privacy-audit.yml"
+      - "data/derived/**"
+      - "powerbi/**"
+  pull_request:
+    paths:
+      - "scripts/privacy_audit.py"
+      - ".github/workflows/privacy-audit.yml"
+      - "data/derived/**"
+      - "powerbi/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Scan tracked CSVs and Power BI package metadata
+        run: python scripts/privacy_audit.py --strict --output privacy_audit_summary.json
