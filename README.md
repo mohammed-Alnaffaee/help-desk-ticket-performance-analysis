@@ -33,7 +33,7 @@ Static views of the historical Power BI report (2019–2022). The **44.18%** hea
 
 ![Operational Deep Dive — counted status duration and breached-ticket counts](docs/images/dashboard_workflow_operational_analysis.png)
 
-These are screenshots, not interactive dashboards. The Power BI project file is available in [`powerbi/`](powerbi/); using it requires Power BI Desktop and access to the local PostgreSQL reporting views.
+These are screenshots, not interactive dashboards. The Power BI project file is available in [`powerbi/`](powerbi/); opening and refreshing it requires Power BI Desktop and compatible PostgreSQL reporting views. **The imported PBIX data model is not cleared for independent redistribution by the privacy screen; prefer the aggregate screenshots when sharing the portfolio.**
 
 ## Selected findings
 
@@ -66,13 +66,13 @@ Further details: [Cleaning and Transformation Rules](docs/Cleaning_and_Transform
 | Path | Contents |
 |---|---|
 | [`python/`](python/) | Event reconstruction, audit helper, unit tests, export validation, PostgreSQL CSV preparation |
-| [`sql/`](sql/) | 19 numbered analysis/QA/view-definition SQL scripts |
+| [`sql/`](sql/) | Staging-table DDL/import assertions plus 19 numbered analysis/QA/view-definition SQL scripts |
 | [`powerbi/`](powerbi/) | Power BI Desktop report with two pages; refresh requires a suitable PostgreSQL environment |
 | [`docs/`](docs/) | Findings, business rules, terminology, original decision log, methodology and dashboard screenshots |
 | [`data/derived/`](data/derived/) | Generated CSV/JSON snapshots based on CC BY 4.0 source data; privacy review still recommended |
 | [`results/`](results/) | Saved test-results log |
 
-Two dashboard previews are included under [`docs/images/`](docs/images/). The `.pbix` contains an imported data model; its suitability for public distribution needs review before promoting this branch to `main`.
+Two dashboard previews are included under [`docs/images/`](docs/images/). The `.pbix` contains an imported row-level data model; see the [Privacy Review](docs/Privacy_Review.md) before downloading, reusing, or redistributing it.
 
 ## Run Python locally
 
@@ -94,7 +94,7 @@ The **source archive is not included**. Its internal layout must contain `Help D
 
 The analytical SQL files use staging tables `staging.ticket_outcomes` and `staging.status_intervals`. Files `18_ticket_performance_view.sql` and `19_ticket_workflow_view.sql` build the reporting views.
 
-**Current reproduction gap:** the PostgreSQL staging-table DDL and loading instructions have **not yet been versioned** in this repository. The SQL stage is therefore **not fully turn-key from a fresh database**. The bundled `python/prepare_postgres_csv.py` only reorders the ticket-outcome CSV columns for an existing staging-table layout. No passwords or local DB credentials should be committed.
+**Fresh PostgreSQL setup is now documented:** [PostgreSQL Reproduction Guide](docs/PostgreSQL_Reproduction_Guide.md) gives the setup, import and verification commands. The two new SQL scripts [`00_create_staging_tables.sql`](sql/00_create_staging_tables.sql) and [`00_verify_staging_import.sql`](sql/00_verify_staging_import.sql) define the 35/10-column staging schemas and check the imported data. A [GitHub Actions smoke test](.github/workflows/postgres-repro-check.yml) provisions PostgreSQL 18, imports the published derived CSV snapshots, builds the reporting views and validates counts. This smoke test verifies the SQL import path—not full source-ZIP regeneration or manual Power BI refresh. Do not commit passwords or local DB credentials.
 
 ## Dataset source and attribution
 
@@ -112,6 +112,6 @@ The analytical SQL files use staging tables `staging.ticket_outcomes` and `stagi
 - The conditional rate depends on working closure/pausing rules; it must **not** be presented as an approved company KPI.
 - The 109 excluded tickets consist of **40 censored, 62 semantic, and 7 data-quality indeterminate** cases.
 - Workflow delays are **investigation candidates**, not diagnosed root causes, employee labor hours, financial losses, or proven intervention opportunities.
-- The GitHub history already contains derived CSV exports and the imported Power BI data model. The cited source release is CC BY 4.0, but **review derived records and the embedded Power BI data for privacy or third-party restrictions before a final public release**. Moving or deleting files in a new commit does not erase prior Git history.
+- The GitHub history contains derived CSV exports and an imported Power BI model. An [automated privacy screen](.github/workflows/privacy-audit.yml) scans published CSV values and the readable PBIX package metadata for direct-identifier patterns; this **cannot certify anonymization or inspect the complete embedded DataModel**. Read the [Privacy Review](docs/Privacy_Review.md) before redistributing row-level artifacts. Moving or deleting files does not erase earlier Git history.
 
 **Status:** Analyzed and documented portfolio case study; no company validation, deployment, or measured business intervention.
