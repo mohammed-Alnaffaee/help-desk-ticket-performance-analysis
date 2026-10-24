@@ -1,6 +1,6 @@
 # PostgreSQL reproduction guide (Windows / PostgreSQL 18)
 
-This describes how to rebuild the **SQL staging tables and reporting views** from the original public dataset and the project's Python scripts. It does not require the previously committed derived CSV snapshots. The procedure has been documented against the code's column definitions; a fresh-database execution has **not** yet been verified by the repository maintainer.
+This describes how to rebuild the **SQL staging tables and reporting views** from the original public dataset and the project's Python scripts. It does not require the previously committed derived CSV snapshots. The **staging schema, CSV imports and reporting views were successfully rebuilt** in an isolated PostgreSQL 18 GitHub Actions job on **24 October 2026**: [view reproducibility test](https://github.com/mohammed-Alnaffaee/help-desk-ticket-performance-analysis/actions/runs/40101045683). That CI run used the published derived CSV snapshots. Full regeneration from the source ZIP and local Power BI Desktop refresh were **not** rerun in CI.
 
 ## Prerequisites
 
@@ -97,4 +97,4 @@ Connect to your local PostgreSQL server and the `helpdesk_analytics` database (t
 
 ## Limitations
 
-The pipeline uses an academic **working** 72-hour clock definition, not a source-company contractual SLA. Saved results represent a historical 2019–2022 subset. This guide supplies the missing schema/import procedure but is not evidence of a new, independent full-run verification.
+The pipeline uses an academic **working** 72-hour clock definition, not a source-company contractual SLA. Saved results represent a historical 2019–2022 subset. The CI test demonstrates a fresh PostgreSQL 18 import with **19,714 tickets**, **81,931 intervals**, **19,605 evaluable tickets**, **8,662 confirmed breaches**, and **70,009 ticket-status view rows**. It is not a full raw-dataset end-to-end reproduction or an independent source-company validation.
