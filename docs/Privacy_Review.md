@@ -19,6 +19,8 @@ python scripts/privacy_audit.py --strict --output local_output/privacy_audit.jso
 
 GitHub Actions also runs the same read-only scan on changes to the scanner/workflow and derived artifacts: [Public artifact privacy screen](../.github/workflows/privacy-audit.yml). The script reviews **all rows** of tracked derived CSVs for sensitive column names, email-like values, Saudi phone-number patterns and possible secret assignments; it also inspects the **readable** parts of the PBIX ZIP container. Reports contain **counts only, not matching values**.
 
+**Recorded automated result — 24 October 2026:** [GitHub Actions run #1](https://github.com/mohammed-Alnaffaee/help-desk-ticket-performance-analysis/actions/runs/40100869311) **passed**. The scan checked **5 complete CSV files** (4, 464, 81,931, 19,714 and 30 rows) plus the **PBIX container** (31 entries). It found **zero** matching sensitive column names, email patterns, Saudi mobile patterns, or secret-assignment patterns in the CSVs; and zero matches in the readable PBIX metadata that it inspected. Its report flagged no files for high-priority pattern review. The PBIX **DataModel**, **Metadata**, and **SecurityBindings** entries were not semantically inspected, so this is **not a privacy clearance**.
+
 A passing automated scan means only that *those pattern checks* did not flag direct identifiers. It does **not** mean the CSVs or embedded Power BI data are approved for publication, and it cannot detect every form of confidential or reidentifiable data.
 
 ## Manual PBIX review still necessary
@@ -37,4 +39,4 @@ Before publicly redistributing an updated Power BI file, open it **locally** in 
 - This review does **not** establish source-company permission, deployment, an actual SLA, or anonymization guarantees.
 - Current conservative stance: share the public README, methods, SQL/Python code, and aggregate screenshots as portfolio evidence; treat full exported row-level data and the downloadable PBIX as **not cleared by this review** until the manual PBIX and linkage checks are completed.
 
-**Status:** Programmatic checks and manual PBIX model review are separate steps. This document must be updated with the scan outcome once run; no legal/privacy clearance is implied.
+**Status:** The automated CSV/readable-PBIX screening completed and passed on 24 October 2026. Manual Power BI DataModel and reidentification review remain open. No legal/privacy clearance is implied.
