@@ -1,0 +1,63 @@
+name: PostgreSQL reproducibility check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "sql/**"
+      - "python/prepare_postgres_csv.py"
+      - ".github/workflows/postgres-repro-check.yml"
+  pull_request:
+    paths:
+      - "sql/**"
+      - "python/prepare_postgres_csv.py"
+      - ".github/workflows/postgres-repro-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fresh-import:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_PASSWORD: local-ci-only
+          POSTGRES_DB: helpdesk_analytics
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d helpdesk_analytics"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 8
+    env:
+      PGHOST: localhost
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGDATABASE: helpdesk_analytics
+      PGPASSWORD: local-ci-only
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install PostgreSQL client
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
+      - name: Prepare ticket outcomes CSV
+        run: |
+          python python/prepare_postgres_csv.py data/derived/ticket_outcomes_conditional.csv /tmp/ticket_outcomes_postgres.csv
+      - name: Create fresh staging tables
+        run: psql -v ON_ERROR_STOP=1 -f sql/00_create_staging_tables.sql
+      - name: Import project CSVs in proper order
+        run: |
+          psql -v ON_ERROR_STOP=1 -c "\\copy staging.ticket_outcomes FROM '/tmp/ticket_outcomes_postgres.csv' WITH (FORMAT csv, HEADER true, NULL '')"
+          psql -v ON_ERROR_STOP=1 -c "\\copy staging.status_intervals FROM 'data/derived/observed_status_intervals.csv' WITH (FORMAT csv, HEADER true, NULL '')"
+      - name: Create reporting views
+        run: |
+          psql -v ON_ERROR_STOP=1 -f sql/18_ticket_performance_view.sql
+          psql -v ON_ERROR_STOP=1 -f sql/19_ticket_workflow_view.sql
+      - name: Verify counts, status consistency and workflow grain
+        run: psql -v ON_ERROR_STOP=1 -f sql/00_verify_staging_import.sql
